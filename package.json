@@ -1,28 +1,28 @@
 {
-    "name": "bogus.js",
-    "description": "Access Backbone templates from Hogan",
-    "version": "0.0.0",
-    "author": "Stéphan Kochen <stephan@angrybytes.com>",
-    "keywords": ["mustache", "template", "hogan", "backbone"],
-    "licenses": {
-        "type": "Apache-2.0",
-        "url": "http://www.apache.org/licenses/LICENSE-2.0"
-    },
+  "name": "bogus.js",
+  "description": "Access Backbone templates from Hogan",
+  "version": "0.0.0",
+  "author": "Stéphan Kochen <stephan@angrybytes.com>",
+  "keywords": ["mustache", "template", "hogan", "backbone"],
+  "licenses": {
+    "type": "Apache-2.0",
+    "url": "http://www.apache.org/licenses/LICENSE-2.0"
+  },
 
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/AngryBytes/bogus.js.git"
-    },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AngryBytes/bogus.js.git"
+  },
 
-    "dependencies": {
-        "hogan.js": "1.0.5-dev"
-    },
-    "devDependencies": {
-        "tap": "0.2"
-    },
+  "dependencies": {
+    "hogan.js": "1.0.5-dev"
+  },
+  "devDependencies": {
+    "tap": "0.2"
+  },
 
-    "main": "bogus.js",
-    "scripts": {
-        "test": "tap test.js"
-    }
+  "main": "bogus.js",
+  "scripts": {
+    "test": "tap test.js"
+  }
 }
