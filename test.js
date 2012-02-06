@@ -1,11 +1,16 @@
-// This is the Hogan.js test suite, running on node-tap.
+var fs = require('fs');
+var tap = require('tap');
+var Bogus = require('./');
 
-// It's actually derived from Hogan.js master (5010d991f1), whereis Bogus
-// requires the current NPM release 1.0.5-dev. But Hogan.js master started
-// using QUnit, which is a lot easier to translate to TAP.
 
-// FIXME: Tests comparing function bodies were disabled.
-// FIXME: Check into failing tests.
+// FIXME: Bogus-specific tests.
+
+
+// The following is taken from the Hogan.js test suite.
+
+// It's actually derived from Hogan.js master (5010d991f1), whereas Bogus
+// requires the current release 1.0.5. But Hogan.js master started using
+// QUnit, which is a lot easier to translate to TAP.
 
 /*
  *  Copyright 2011 Twitter, Inc.
@@ -21,10 +26,6 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
-var fs = require('fs');
-var tap = require('tap');
-var Bogus = require('./');
 
 tap.test("Scan Text No Tags", function(test) {
   var text = "<h2>hi</h2>";
