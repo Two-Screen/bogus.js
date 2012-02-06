@@ -311,7 +311,7 @@ tap.test("Basic Output As String", function(test) {
   test.equal(textFunc, "function(context, partials){this.buffer.push('test');};", "template renders correct text function.");
   test.end();
 });
-*/
+ */
 
 tap.test("One Variable", function(test) {
   var text = "test {{foo}} test";
@@ -330,7 +330,7 @@ tap.test("One Variable As String", function(test) {
      "Function text is correct with variable substitution.");
   test.end();
 });
-*/
+ */
 
 tap.test("Render With Whitespace", function(test) {
   var text = "{{ string }}";
@@ -520,6 +520,8 @@ tap.test("Falsy Variable No Render", function(test) {
   test.end();
 });
 
+// FIXME: This test is not in 1.0.5.
+/*
 tap.test("Undefined Return Value From Lambda", function(test) {
   var text = "abc{{foo}}def";
   var t = Bogus.compile(text);
@@ -532,11 +534,12 @@ tap.test("Undefined Return Value From Lambda", function(test) {
   test.equal(s, "abcdef", "deal with undefined return values from lambdas.")
   test.end();
 });
+ */
 
 tap.test("Section Extensions", function(test) {
   var text = "Test {{_//|__foo}}bar{{/foo}}";
   var options = {sectionTags:[{o:'_//|__foo', c:'foo'}]};
-  var tree = Bogus.parse(Bogus.scan(text), text, options);
+  var tree = Bogus.parse(Bogus.scan(text), options);
   test.equal(tree[1].tag, "#", "_//|__foo node transformed to section");
   test.equal(tree[1].n, "_//|__foo", "_//|__foo node transformed to section");
 
@@ -550,7 +553,7 @@ tap.test("Misnested Section Extensions", function(test) {
   var text = "Test {{__foo}}bar{{/bar}}";
   var options = {sectionTags:[{o:'__foo', c:'foo'}, {o:'__bar', c:'bar'}]};
   test.throws(function() {
-    var tree = Bogus.parse(Bogus.scan(text), text, options);
+    var tree = Bogus.parse(Bogus.scan(text), options);
   }, {
     name: "Error",
     message: "Nesting error: __foo vs. bar"
@@ -558,6 +561,8 @@ tap.test("Misnested Section Extensions", function(test) {
   test.end();
 });
 
+// FIXME: This test is not in 1.0.5.
+/*
 tap.test("Section Extensions In Higher Order Sections", function(test) {
   var text = "Test{{_foo}}bar{{/foo}}";
   var options = {sectionTags:[{o:'_foo', c:'foo'}, {o:'_baz', c:'baz'}]};
@@ -571,7 +576,10 @@ tap.test("Section Extensions In Higher Order Sections", function(test) {
   test.equal(s, "Test", "unprocessed test");
   test.end();
 });
+ */
 
+// FIXME: This test is not in 1.0.5.
+/*
 tap.test("Section Extensions In Lambda Replace Variable", function(test) {
   var text = "Test{{foo}}";
   var options = {sectionTags:[{o:'_baz', c:'baz'}]};
@@ -585,6 +593,7 @@ tap.test("Section Extensions In Lambda Replace Variable", function(test) {
   test.equal(s, "Test", "unprocessed test");
   test.end();
 });
+ */
 
 tap.test("Nested Section", function(test) {
   var text = "{{#foo}}{{#bar}}{{baz}}{{/bar}}{{/foo}}";
@@ -696,6 +705,8 @@ tap.test("Mustache JS Undefined String", function(test) {
   test.end();
 });
 
+// FIXME: This test is not in 1.0.5.
+/*
 tap.test("Mustache JS Undefined Triple Stache", function(test) {
   var text = 'foo{{{bar}}}baz';
   var t = Bogus.compile(text);
@@ -703,7 +714,10 @@ tap.test("Mustache JS Undefined Triple Stache", function(test) {
   test.equal(s, 'foobaz', 'undefined value does not render in triple stache.');
   test.end();
 });
+ */
 
+// FIXME: This test is not in 1.0.5.
+/*
 tap.test("Mustache JS Null String", function(test) {
   var text = 'foo{{bar}}baz';
   var t = Bogus.compile(text);
@@ -711,7 +725,10 @@ tap.test("Mustache JS Null String", function(test) {
   test.equal(s, 'foobaz', 'undefined value does not render.');
   test.end();
 });
+ */
 
+// FIXME: This test is not in 1.0.5.
+/*
 tap.test("Mustache JS Null Triple Stache", function(test) {
   var text = 'foo{{{bar}}}baz';
   var t = Bogus.compile(text);
@@ -719,6 +736,7 @@ tap.test("Mustache JS Null Triple Stache", function(test) {
   test.equal(s, 'foobaz', 'undefined value does not render in triple stache.');
   test.end();
 });
+ */
 
 tap.test("Mustache JS Triple Stache Alt Delimiter", function(test) {
   var text = '{{=<% %>=}}<% foo %> {{foo}} <%{bar}%> {{{bar}}}';
