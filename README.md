@@ -32,7 +32,11 @@ actually fail without them.)
 
 ### From Node.js
 
-An NPM package will be available soon. But the premise is:
+Install using NPM:
+
+    $ npm install bogus.js
+
+Then simply:
 
     var Bogus = require('bogus.js');
 
