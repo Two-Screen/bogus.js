@@ -1,4 +1,4 @@
-## Bogus.js = Hogan.js + Backbone.js
+## Bogus.js = Hogan.js + Backbone.js [![Build Status](https://secure.travis-ci.org/AngryBytes/bogus.js.png)](http://travis-ci.org/AngryBytes/bogus.js)
 
 Bogus.js extends [Hogan.js] with support for [Backbone.js] models. This means
 that mustache `{{tags}}` will look for Backbone.Model attributes, and mustache
