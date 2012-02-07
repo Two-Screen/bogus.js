@@ -1,9 +1,47 @@
 var fs = require('fs');
 var tap = require('tap');
+var Backbone = require('backbone');
 var Bogus = require('./');
 
 
-// FIXME: Bogus-specific tests.
+// Backbone.js-specific tests.
+
+tap.test("Render With Model", function(test) {
+  var text = "test {{foo}} test";
+  var t = Bogus.compile(text);
+  var m = new Backbone.Model({foo:'bar'});
+  var s = t.render(m);
+  test.equal(s, "test bar test", "basic variable substitution works.");
+  test.end();
+});
+
+tap.test("Render With Nested Model", function(test) {
+  var text = "test {{foo.bar}} test";
+  var t = Bogus.compile(text);
+  var m = new Backbone.Model({bar:'baz'});
+  var s = t.render({foo:m});
+  test.equal(s, "test baz test", "basic traversal works.");
+  test.end();
+});
+
+tap.test("Render With Array Of Models", function(test) {
+  var text = "test {{#list}}{{val}}{{/list}} test";
+  var t = Bogus.compile(text);
+  var m1 = new Backbone.Model({val:'foo'});
+  var m2 = new Backbone.Model({val:'bar'});
+  var s = t.render({list:[m1,m2]});
+  test.equal(s, "test foobar test", "basic iteration works.");
+  test.end();
+});
+
+tap.test("Render With Collection", function(test) {
+  var text = "test {{#list}}foo {{val}} {{/list}}test";
+  var t = Bogus.compile(text);
+  var c = new Backbone.Collection([{val:'bar'}, {val:'baz'}]);
+  var s = t.render({list:c});
+  test.equal(s, "test foo bar foo baz test", "basic iteration works.");
+  test.end();
+});
 
 
 // The following is taken from the Hogan.js test suite.

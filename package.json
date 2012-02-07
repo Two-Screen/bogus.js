@@ -18,7 +18,8 @@
     "hogan.js": "1.0.5-dev"
   },
   "devDependencies": {
-    "tap": "0.2"
+    "tap": "0.2",
+    "backbone": ">=0.5"
   },
 
   "main": "bogus.js",
