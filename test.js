@@ -304,7 +304,7 @@ tap.test("Basic Output", function(test) {
   test.end();
 });
 
-// FIXME: disabled
+// FIXME: This test is commented out in 1.0.5.
 /*
 tap.test("Basic Output As String", function(test) {
   var text = "test";
@@ -322,7 +322,7 @@ tap.test("One Variable", function(test) {
   test.end();
 });
 
-// FIXME: disabled
+// FIXME: This test is commented out in 1.0.5.
 /*
 tap.test("One Variable As String", function(test) {
   var text = "test {{foo}} test";
