@@ -1,11 +1,6 @@
-(function() {
+(function(Hogan) {
 
   var ctor = function() {};
-
-  // Require Hogan.js if we need to.
-  if (typeof require !== 'undefined') {
-    var Hogan = require('hogan.js');
-  }
 
   // Create a Bogus namespace that inherits from Hogan.
   ctor.prototype = Hogan;
@@ -152,4 +147,6 @@
     return val;
   };
 
-})();
+
+// Require Hogan.js if we need to.
+})(typeof require === 'function' ? require('hogan.js') : Hogan);
