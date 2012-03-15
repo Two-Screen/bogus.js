@@ -342,15 +342,12 @@ tap.test("Basic Output", function(test) {
   test.end();
 });
 
-// FIXME: This test is commented out in 1.0.5.
-/*
 tap.test("Basic Output As String", function(test) {
   var text = "test";
   var textFunc = Bogus.compile(text, true);
   test.equal(textFunc, "function(context, partials){this.buffer.push('test');};", "template renders correct text function.");
   test.end();
 });
- */
 
 tap.test("One Variable", function(test) {
   var text = "test {{foo}} test";
@@ -360,8 +357,6 @@ tap.test("One Variable", function(test) {
   test.end();
 });
 
-// FIXME: This test is commented out in 1.0.5.
-/*
 tap.test("One Variable As String", function(test) {
   var text = "test {{foo}} test";
   var funcText = Bogus.compile(text, true);
@@ -369,7 +364,6 @@ tap.test("One Variable As String", function(test) {
      "Function text is correct with variable substitution.");
   test.end();
 });
- */
 
 tap.test("Render With Whitespace", function(test) {
   var text = "{{ string }}";
@@ -559,8 +553,6 @@ tap.test("Falsy Variable No Render", function(test) {
   test.end();
 });
 
-// FIXME: This test is not in 1.0.5.
-/*
 tap.test("Undefined Return Value From Lambda", function(test) {
   var text = "abc{{foo}}def";
   var t = Bogus.compile(text);
@@ -573,7 +565,6 @@ tap.test("Undefined Return Value From Lambda", function(test) {
   test.equal(s, "abcdef", "deal with undefined return values from lambdas.")
   test.end();
 });
- */
 
 tap.test("Section Extensions", function(test) {
   var text = "Test {{_//|__foo}}bar{{/foo}}";
@@ -600,8 +591,6 @@ tap.test("Misnested Section Extensions", function(test) {
   test.end();
 });
 
-// FIXME: This test is not in 1.0.5.
-/*
 tap.test("Section Extensions In Higher Order Sections", function(test) {
   var text = "Test{{_foo}}bar{{/foo}}";
   var options = {sectionTags:[{o:'_foo', c:'foo'}, {o:'_baz', c:'baz'}]};
@@ -615,24 +604,52 @@ tap.test("Section Extensions In Higher Order Sections", function(test) {
   test.equal(s, "Test", "unprocessed test");
   test.end();
 });
- */
 
-// FIXME: This test is not in 1.0.5.
-/*
 tap.test("Section Extensions In Lambda Replace Variable", function(test) {
   var text = "Test{{foo}}";
   var options = {sectionTags:[{o:'_baz', c:'baz'}]};
   var t = Bogus.compile(text, options);
   var context = {
-    "foo": function (s) {
-      return "{{_baz}}" + s + "{{/baz}}";
+    "foo": function () {
+      return function() { "{{_baz}}" + s + "{{/baz}}"; };
     }
   }
   var s = t.render(context);
   test.equal(s, "Test", "unprocessed test");
   test.end();
 });
- */
+
+tap.test("Mustache not reprocessed for method calls in interpolations", function(test) {
+  var text = "text with {{foo}} inside";
+  var t = Bogus.compile(text);
+  var context = {
+    foo: function() {
+      return "no processing of {{tags}}";
+    }
+  }
+  var s = t.render(context);
+  test.equal(s, "text with no processing of {{tags}} inside", "method calls should not be processed as mustache.");
+
+  var text = "text with {{{foo}}} inside";
+  var t = Bogus.compile(text);
+  var s = t.render(context);
+  test.equal(s, "text with no processing of {{tags}} inside", "method calls should not be processed as mustache in triple staches.");
+});
+
+tap.test("Mustache is reprocessed for lambdas in interpolations", function(test) {
+  var text = "text with {{foo}} inside";
+  var t = Hogan.compile(text);
+  var context = {
+    bar: "42",
+    foo: function() {
+      return function() {
+        return "processing of {{bar}}";
+      };
+    }
+  };
+  var s = t.render(context);
+  test.equal(s, "text with processing of 42 inside", "the return value of lambdas should be processed mustache.");
+});
 
 tap.test("Nested Section", function(test) {
   var text = "{{#foo}}{{#bar}}{{baz}}{{/bar}}{{/foo}}";
@@ -744,8 +761,6 @@ tap.test("Mustache JS Undefined String", function(test) {
   test.end();
 });
 
-// FIXME: This test is not in 1.0.5.
-/*
 tap.test("Mustache JS Undefined Triple Stache", function(test) {
   var text = 'foo{{{bar}}}baz';
   var t = Bogus.compile(text);
@@ -753,10 +768,7 @@ tap.test("Mustache JS Undefined Triple Stache", function(test) {
   test.equal(s, 'foobaz', 'undefined value does not render in triple stache.');
   test.end();
 });
- */
 
-// FIXME: This test is not in 1.0.5.
-/*
 tap.test("Mustache JS Null String", function(test) {
   var text = 'foo{{bar}}baz';
   var t = Bogus.compile(text);
@@ -764,10 +776,7 @@ tap.test("Mustache JS Null String", function(test) {
   test.equal(s, 'foobaz', 'undefined value does not render.');
   test.end();
 });
- */
 
-// FIXME: This test is not in 1.0.5.
-/*
 tap.test("Mustache JS Null Triple Stache", function(test) {
   var text = 'foo{{{bar}}}baz';
   var t = Bogus.compile(text);
@@ -775,7 +784,6 @@ tap.test("Mustache JS Null Triple Stache", function(test) {
   test.equal(s, 'foobaz', 'undefined value does not render in triple stache.');
   test.end();
 });
- */
 
 tap.test("Mustache JS Triple Stache Alt Delimiter", function(test) {
   var text = '{{=<% %>=}}<% foo %> {{foo}} <%{bar}%> {{{bar}}}';
@@ -783,6 +791,15 @@ tap.test("Mustache JS Triple Stache Alt Delimiter", function(test) {
   var s = t.render({foo:'yeah', bar:'hmm'});
   test.equal(s, 'yeah {{foo}} hmm {{{bar}}}', 'triple stache inside alternate delimiter works.');
   test.end();
+});
+
+/* Safety tests */
+
+tap.test("Updates object state", function(test) {
+  var text = '{{foo}} {{bar}} {{foo}}';
+  var t = Bogus.compile(text);
+  var s = t.render({foo: 1, bar: function() { this.foo++; return 42; } });
+  test.equal(s, '1 42 2');
 });
 
 /* shootout benchmark tests */
@@ -858,13 +875,13 @@ tap.test("Shoot Out Filter", function(test) {
   var t = Bogus.compile(text);
   var s = t.render({
     filter: function() {
-      return function(text, render) {
-        return render(text).toUpperCase();
+      return function(text) {
+        return text.toUpperCase() + "{{bar}}";
       }
     },
     bar: "bar"
   });
-  var expected = "FOO BAR"
+  var expected = "FOO bar"
   test.equal(s, expected, "Shootout Filter compiled correctly");
   test.end();
 });
