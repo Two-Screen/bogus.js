@@ -9,13 +9,13 @@ that mustache `{{tags}}` will look for Backbone.Model attributes, and mustache
 
 ### From the browser
 
-Bogus.js is tied to a specific version of Hogan.js, currently 1.0.5. You will
+Bogus.js is tied to a specific version of Hogan.js, currently 2.0.0. You will
 probably want one of the following builds:
 
- * [hogan-1.0.5.js]: Complete build.
- * [hogan-1.0.5.min.js]: Complete build, minified.
- * [template-1.0.5.js]: Just Hogan.Template.
- * [template-1.0.5.min.js]: Just Hogan.Template, minified.
+ * [hogan-2.0.0.js]: Complete build.
+ * [hogan-2.0.0.min.js]: Complete build, minified.
+ * [template-2.0.0.js]: Just Hogan.Template.
+ * [template-2.0.0.min.js]: Just Hogan.Template, minified.
 
 Make sure Hogan.js and Bogus.js are included in your page in order:
 
@@ -24,10 +24,10 @@ Make sure Hogan.js and Bogus.js are included in your page in order:
     <script src="hogan.js"></script>
     <script src="bogus.js"></script>
 
- [hogan-1.0.5.js]: https://raw.github.com/twitter/hogan.js/gh-pages/builds/1.0.5/hogan-1.0.5.js
- [hogan-1.0.5.min.js]: https://raw.github.com/twitter/hogan.js/gh-pages/builds/1.0.5/hogan-1.0.5.min.js
- [template-1.0.5.js]: https://raw.github.com/twitter/hogan.js/gh-pages/builds/1.0.5/template-1.0.5.js
- [template-1.0.5.min.js]: https://raw.github.com/twitter/hogan.js/gh-pages/builds/1.0.5/template-1.0.5.min.js
+ [hogan-2.0.0.js]: https://raw.github.com/twitter/hogan.js/gh-pages/builds/2.0.0/hogan-2.0.0.js
+ [hogan-2.0.0.min.js]: https://raw.github.com/twitter/hogan.js/gh-pages/builds/2.0.0/hogan-2.0.0.min.js
+ [template-2.0.0.js]: https://raw.github.com/twitter/hogan.js/gh-pages/builds/2.0.0/template-2.0.0.js
+ [template-2.0.0.min.js]: https://raw.github.com/twitter/hogan.js/gh-pages/builds/2.0.0/template-2.0.0.min.js
 
 ### From Node.js
 
