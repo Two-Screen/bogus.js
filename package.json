@@ -15,7 +15,7 @@
   },
 
   "dependencies": {
-    "hogan.js": "1.0.5-dev"
+    "hogan.js": "2.0.0"
   },
   "devDependencies": {
     "tap": "0.2",
