@@ -19,11 +19,10 @@ probably want one of the following builds:
 
 Make sure Hogan.js and Bogus.js are included in your page in order:
 
+    <script src="underscore.js"></script>
+    <script src="backbone.js"></script>
     <script src="hogan.js"></script>
     <script src="bogus.js"></script>
-
-(Of course, you also want Backbone and dependencies, but Bogus.js won't
-actually fail without them.)
 
  [hogan-1.0.5.js]: https://raw.github.com/twitter/hogan.js/gh-pages/builds/1.0.5/hogan-1.0.5.js
  [hogan-1.0.5.min.js]: https://raw.github.com/twitter/hogan.js/gh-pages/builds/1.0.5/hogan-1.0.5.min.js
