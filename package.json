@@ -15,6 +15,7 @@
   },
 
   "dependencies": {
+    "underscore": "1",
     "hogan.js": "2.0.0"
   },
   "devDependencies": {

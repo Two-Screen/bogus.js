@@ -1,5 +1,16 @@
 (function(Hogan) {
 
+  // Get a hold of Underscore.js.
+  var _ = null;
+  if (typeof window !== 'undefined') {
+      _ = window._;
+  }
+  if (!_) {
+      _ = require('underscore');
+  }
+
+
+  // Empty constructor.
   var ctor = function() {};
 
   // Create a Bogus namespace that inherits from Hogan.
