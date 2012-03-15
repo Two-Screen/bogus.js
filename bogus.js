@@ -9,7 +9,7 @@
     module.exports = Bogus;
   }
   else {
-    this.Bogus = Bogus
+    this.Bogus = Bogus;
   }
 
   // Override the compiler's generate method to create Bogus templates.
