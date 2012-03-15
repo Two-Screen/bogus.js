@@ -46,9 +46,8 @@ tap.test("Render With Collection", function(test) {
 
 // The following is taken from the Hogan.js test suite.
 
-// It's actually derived from Hogan.js master (5010d991f1), whereas Bogus
-// requires the current release 1.0.5. But Hogan.js master started using
-// QUnit, which is a lot easier to translate to TAP.
+// Hogan.js uses QUnit. Perhaps we should too, but for now, this is the
+// entire test suite converted to use TAP.
 
 /*
  *  Copyright 2011 Twitter, Inc.
