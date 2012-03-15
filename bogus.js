@@ -60,21 +60,24 @@
 
   // render a section
   proto.rs = function(context, partials, section) {
-    var buf = '',
+    var _this = this,
         tail = context[context.length - 1];
 
-    if (typeof tail === 'object' && tail.forEach) {
-      tail.forEach(function(model) {
-        context.push(model);
-        buf += section(context, partials);
-        context.pop();
-      });
-    }
-    else {
-      buf = section(context, partials);
+    function iter(obj) {
+      context.push(obj);
+      section(context, partials, _this);
+      context.pop();
     }
 
-    return buf;
+    if (tail.forEach) {
+      tail.forEach(iter);
+    }
+    else if (_.isArray(tail)) {
+      _.each(tail, iter);
+    }
+    else {
+      section(context, partials, this);
+    }
   };
 
   // maybe start a section
