@@ -24,10 +24,14 @@
   }
 
   // Override the compiler's generate method to create Bogus templates.
-  Bogus.generate = function (code, text, options) {
+  Bogus.generate = function (tree, text, options) {
+    var code = Hogan.generate(tree, text, { asString: true });
     if (options.asString) {
-      return 'function(c,p,i){' + code + ';}';
+        return code;
     }
+
+    // FIXME: This is hacky, but otherwise requires support from Hogan.js.
+    code = code.slice(16, -2);
 
     return new Bogus.Template(new Function('c', 'p', 'i', code),
                               text, Bogus, options);
