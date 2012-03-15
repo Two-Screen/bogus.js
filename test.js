@@ -342,12 +342,15 @@ tap.test("Basic Output", function(test) {
   test.end();
 });
 
+// FIXME: This test is disabled in 2.0.0.
+/*
 tap.test("Basic Output As String", function(test) {
   var text = "test";
   var textFunc = Bogus.compile(text, true);
   test.equal(textFunc, "function(context, partials){this.buffer.push('test');};", "template renders correct text function.");
   test.end();
 });
+ */
 
 tap.test("One Variable", function(test) {
   var text = "test {{foo}} test";
@@ -357,6 +360,8 @@ tap.test("One Variable", function(test) {
   test.end();
 });
 
+// FIXME: This test is disabled in 2.0.0.
+/*
 tap.test("One Variable As String", function(test) {
   var text = "test {{foo}} test";
   var funcText = Bogus.compile(text, true);
@@ -364,6 +369,7 @@ tap.test("One Variable As String", function(test) {
      "Function text is correct with variable substitution.");
   test.end();
 });
+ */
 
 tap.test("Render With Whitespace", function(test) {
   var text = "{{ string }}";
@@ -569,11 +575,11 @@ tap.test("Undefined Return Value From Lambda", function(test) {
 tap.test("Section Extensions", function(test) {
   var text = "Test {{_//|__foo}}bar{{/foo}}";
   var options = {sectionTags:[{o:'_//|__foo', c:'foo'}]};
-  var tree = Bogus.parse(Bogus.scan(text), options);
+  var tree = Bogus.parse(Bogus.scan(text), text, options);
   test.equal(tree[1].tag, "#", "_//|__foo node transformed to section");
   test.equal(tree[1].n, "_//|__foo", "_//|__foo node transformed to section");
 
-  var t = Bogus.compile(text, options);
+  var t = Bogus.compile(text, options );
   var s = t.render({'_//|__foo':true});
   test.equal(s, "Test bar", "Custom sections work");
   test.end();
@@ -583,7 +589,7 @@ tap.test("Misnested Section Extensions", function(test) {
   var text = "Test {{__foo}}bar{{/bar}}";
   var options = {sectionTags:[{o:'__foo', c:'foo'}, {o:'__bar', c:'bar'}]};
   test.throws(function() {
-    var tree = Bogus.parse(Bogus.scan(text), options);
+    var tree = Bogus.parse(Bogus.scan(text), text, options);
   }, {
     name: "Error",
     message: "Nesting error: __foo vs. bar"
@@ -634,11 +640,12 @@ tap.test("Mustache not reprocessed for method calls in interpolations", function
   var t = Bogus.compile(text);
   var s = t.render(context);
   test.equal(s, "text with no processing of {{tags}} inside", "method calls should not be processed as mustache in triple staches.");
+  test.end();
 });
 
 tap.test("Mustache is reprocessed for lambdas in interpolations", function(test) {
   var text = "text with {{foo}} inside";
-  var t = Hogan.compile(text);
+  var t = Bogus.compile(text);
   var context = {
     bar: "42",
     foo: function() {
@@ -649,6 +656,7 @@ tap.test("Mustache is reprocessed for lambdas in interpolations", function(test)
   };
   var s = t.render(context);
   test.equal(s, "text with processing of 42 inside", "the return value of lambdas should be processed mustache.");
+  test.end();
 });
 
 tap.test("Nested Section", function(test) {
@@ -800,6 +808,7 @@ tap.test("Updates object state", function(test) {
   var t = Bogus.compile(text);
   var s = t.render({foo: 1, bar: function() { this.foo++; return 42; } });
   test.equal(s, '1 42 2');
+  test.end();
 });
 
 /* shootout benchmark tests */
