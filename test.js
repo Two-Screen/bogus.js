@@ -7,11 +7,17 @@ var Bogus = require('./');
 // Backbone.js-specific tests.
 
 tap.test("Render With Model", function(test) {
-  var text = "test {{foo}} test";
+  var text = "test {{foo}} test {{bar}}";
   var t = Bogus.compile(text);
   var m = new Backbone.Model({foo:'bar'});
   var s = t.render(m);
-  test.equal(s, "test bar test", "basic variable substitution works.");
+  test.equal(s, "test bar test ", "basic variable substitution works.");
+  m.bar = 'baz';
+  var s = t.render(m);
+  test.equal(s, "test bar test baz", "fallback to regular model attributes.");
+  m.set({ bar: 'foo' });
+  var s = t.render(m);
+  test.equal(s, "test bar test foo", "Backbone attributes shadow regular attributes.");
   test.end();
 });
 

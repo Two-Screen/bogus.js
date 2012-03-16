@@ -45,14 +45,20 @@
   ctor.prototype = Hogan.Template.prototype;
   var proto = Bogus.Template.prototype = new ctor();
 
+  // Truthy includes all JS truthy values, and the empty string.
+  var truthy = function(val) {
+    return (val === '') || !!val;
+  };
+
   // Value helper.
   var getValue = function(obj, key) {
+    var val;
     if (obj && typeof obj === 'object') {
-      if (obj.attributes) {
-        obj = obj.attributes;
+      if (obj.attributes && truthy(val = obj.attributes[key])) {
+        return { val: val, found: true };
       }
-      if (key in obj) {
-        return { val: obj[key], found: true };
+      if (truthy(val = obj[key])) {
+        return { val: val, found: true };
       }
     }
     return { val: false, found: false };
@@ -92,7 +98,7 @@
       val = this.ls(val, ctx, partials, inverted, start, end, tags);
     }
 
-    pass = (val === '') || !!val;
+    pass = truthy(val);
 
     if (!inverted && pass && ctx) {
       ctx.push((typeof val === 'object') ? val : ctx[ctx.length - 1]);
