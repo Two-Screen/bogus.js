@@ -1,7 +1,7 @@
 {
   "name": "bogus.js",
   "description": "Access Backbone templates from Hogan",
-  "version": "0.0.0",
+  "version": "2.0.0",
   "author": "Stéphan Kochen <stephan@angrybytes.com>",
   "keywords": ["mustache", "template", "hogan", "backbone"],
   "licenses": {
