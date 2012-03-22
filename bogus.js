@@ -16,11 +16,10 @@
   // Create a Bogus namespace that inherits from Hogan.
   ctor.prototype = Hogan;
   var Bogus = new ctor();
-  if (typeof module !== 'undefined') {
-    module.exports = Bogus;
-  }
-  else {
+  if (typeof window !== 'undefined') {
     this.Bogus = Bogus;
+  } else {
+    module.exports = Bogus;
   }
 
   // Override the compiler's generate method to create Bogus templates.
