@@ -87,7 +87,7 @@
     }
 
     if (typeof val === 'function') {
-      val = this.ls(val, ctx, partials, inverted, start, end, tags);
+      val = this.ms(val, ctx, partials, inverted, start, end, tags);
     }
 
     pass = truthy(val);
@@ -130,7 +130,7 @@
 
     if (!returnFound && typeof val === 'function') {
       ctx.push(cx);
-      val = this.lv(val, ctx, partials);
+      val = this.mv(val, ctx, partials);
       ctx.pop();
     }
 
@@ -157,7 +157,7 @@
     }
 
     if (!returnFound && typeof val === 'function') {
-      val = this.lv(val, ctx, partials);
+      val = this.mv(val, ctx, partials);
     }
 
     return val;
