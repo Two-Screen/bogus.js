@@ -16,7 +16,7 @@
 
   "dependencies": {
     "underscore": "1",
-    "hogan.js": "3.0.0"
+    "hogan.js": "git://github.com/twitter/hogan.js.git"
   },
   "devDependencies": {
     "backbone": ">=0.5",
