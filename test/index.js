@@ -19,12 +19,20 @@ test("Render With Model", function() {
   var m = new Backbone.Model({foo:'bar'});
   var s = t.render(m);
   is(s, "test bar test ", "basic variable substitution works.");
+
   m.bar = 'baz';
-  var s = t.render(m);
+  s = t.render(m);
   is(s, "test bar test baz", "fallback to regular model attributes.");
+
   m.set({ bar: 'foo' });
-  var s = t.render(m);
+  s = t.render(m);
   is(s, "test bar test foo", "Backbone attributes shadow regular attributes.");
+
+  text = "test {{#bar}}bad{{/bar}}";
+  t = Bogus.compile(text);
+  m.set({ bar: 0 });
+  s = t.render(m);
+  is(s, "test ", "shadow attribute, even when falsey.");
 });
 
 test("Render With Nested Model", function() {

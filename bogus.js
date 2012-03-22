@@ -37,23 +37,25 @@
   Bogus.cache = {};
 
 
-  // Truthy includes all JS truthy values, and the empty string.
-  var truthy = function(val) {
-    return (val === '') || !!val;
-  };
-
-  // Value helper.
+  // Get a value from an object or model.
   var getValue = function(obj, key) {
-    var val;
+    var val = null;
+
     if (obj && typeof obj === 'object') {
-      if (obj.attributes && truthy(val = obj.attributes[key])) {
-        return { val: val, found: true };
+      if (obj.attributes) {
+        val = obj.attributes[key]
       }
-      if (truthy(val = obj[key])) {
-        return { val: val, found: true };
+      if (val == null) {
+        val = obj[key];
       }
     }
-    return { val: false, found: false };
+
+    if (val == null) {
+      return { val: false, found: false };
+    }
+    else {
+      return { val: val, found: true };
+    }
   };
 
   // render a section
@@ -90,7 +92,7 @@
       val = this.ms(val, ctx, partials, inverted, start, end, tags);
     }
 
-    pass = truthy(val);
+    pass = (val === '') || !!val;
 
     if (!inverted && pass && ctx) {
       ctx.push((typeof val === 'object') ? val : ctx[ctx.length - 1]);
