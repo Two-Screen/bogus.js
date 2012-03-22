@@ -26,6 +26,6 @@
 
   "main": "bogus.js",
   "scripts": {
-    "test": "tap test.js"
+    "test": "node ./node_modules/hogan.js/test/run.js ./test/index.html"
   }
 }
