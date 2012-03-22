@@ -22,20 +22,6 @@
     module.exports = Bogus;
   }
 
-  // Override the compiler's generate method to create Bogus templates.
-  Bogus.generate = function (tree, text, options) {
-    var code = Hogan.generate(tree, text, { asString: true });
-    if (options.asString) {
-        return code;
-    }
-
-    // FIXME: This is hacky, but otherwise requires support from Hogan.js.
-    code = code.slice(16, -2);
-
-    return new Bogus.Template(new Function('c', 'p', 'i', code),
-                              text, Bogus, options);
-  };
-
 
   // Template class that inherits from Hogan.Template.
   Bogus.Template = function() {
@@ -43,6 +29,13 @@
   };
   ctor.prototype = Hogan.Template.prototype;
   var proto = Bogus.Template.prototype = new ctor();
+
+  // Methods inherited from Hogan should return our Template class.
+  Bogus.template = Bogus.Template;
+
+  // Create a new cache, to separate Hogan and Bogus Template instances.
+  Bogus.cache = {};
+
 
   // Truthy includes all JS truthy values, and the empty string.
   var truthy = function(val) {

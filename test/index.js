@@ -3,6 +3,16 @@ var is = strictEqual;
 
 // Backbone.js-specific tests.
 
+test("Template Subclass", function() {
+  var text = "test {{foo}} test";
+  var t = Hogan.compile(text);
+  ok(t instanceof Hogan.Template, "Hogan still returns a Hogan.Template");
+  var a = Bogus.compile(text);
+  ok(a instanceof Bogus.Template, "Bogus returns a Bogus.Template");
+  var b = Bogus.compile(text);
+  is(a, b, "return a cached instance for same input");
+});
+
 test("Render With Model", function() {
   var text = "test {{foo}} test {{bar}}";
   var t = Bogus.compile(text);
