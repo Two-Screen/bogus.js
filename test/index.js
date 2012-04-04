@@ -924,6 +924,34 @@ test("Ignores text inside super templates, but does parse $ tags", function() {
   is(s, "hmm", "should render without the text");
 });
 
+test("Issue #62: partial references inside substitutions should work", function () {
+  var parent = "This is a parent template. {{$content}}Child content goes here{{/content}} Ending the parent template.";
+  var main = "Main template start. {{< parent}}{{$content}}This content includes a partial: {{> include}}{{/content}}{{/ parent}} Main template end.";
+  var include = "INCLUDED CONTENT!";
+
+  var templates = {
+    parent: Bogus.compile(parent),
+    main: Bogus.compile(main),
+    include: Bogus.compile(include)
+  };
+
+  is(templates.main.partials.include0, undefined, "partial reference from subustitution is not defined.");
+  is(templates.main.render({}, templates), "Main template start. This is a parent template. This content includes a partial: INCLUDED CONTENT! Ending the parent template. Main template end.", "Included content works inside substitution.");
+
+  eval('var parentFromString = new Bogus.Template(' + Bogus.compile(parent, {asString: true}) + ');');
+  eval('var mainFromString = new Bogus.Template(' + Bogus.compile(main, {asString: true}) + ');');
+  eval('var includeFromString = new Bogus.Template(' + Bogus.compile(include, {asString: true}) + ');');
+
+  // now test compiling these as a string
+  var templatesAsString = {
+    parent: parentFromString,
+    main: mainFromString,
+    include: includeFromString
+  };
+
+  is(templates.main.render({}, templates), templatesAsString.main.render({}, templatesAsString))
+});
+
 /* Safety tests */
 
 test("Updates object state", function() {
@@ -1087,6 +1115,14 @@ test("Stringified templates survive a round trip", function() {
     include: include
   }
   is(compiled.render(context, partials), fromString.render(context, partials), "from string template renders the same as a compiled one");
+});
+
+test("Stringified template bug report", function() {
+  var template = '<div class="comment row" id="comment-{{id}}"><div class="comment-body">{{body}}</div><div class="comment-info"><div class="comment-metadata">{{timestamp_created}}</div><div class="comment-by"><a href="/by/{{poster_username}}">{{poster_username}}<img src="{{poster_image}}"/></a></div></div></div>';
+  var compiled = Bogus.compile(template);
+  var compiledAsString = Bogus.compile(template, {asString: true});
+  eval('var fromString = new Bogus.Template(' + compiledAsString + ');');
+  is(compiled.render(), fromString.render(), "bug report works");
 });
 
 $.each(['list'], function(i, name) {
