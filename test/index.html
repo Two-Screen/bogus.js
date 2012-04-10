@@ -1,17 +1,26 @@
 <html>
 <head>
   <title>Bogus.js Test Suite</title>
-  <link rel="stylesheet" href="../node_modules/hogan.js/test/qunit.css">
-  <script src="../node_modules/hogan.js/test/jquery.js"></script>
-  <script src="../node_modules/hogan.js/test/qunit.js"></script>
+  <link rel="stylesheet" href="../node_modules/hogan.js/test/qunit/qunit/qunit.css">
+
   <script src="../node_modules/hogan.js/test/json2.js"></script>
-  <script src="../node_modules/underscore/underscore.js"></script>
-  <script src="../node_modules/backbone/backbone.js"></script>
+  <script src="../node_modules/hogan.js/test/jquery.js"></script>
+
+  <script src="../node_modules/hogan.js/test/qunit/qunit/qunit.js"></script>
+  <script src="../node_modules/hogan.js/test/qunit-logging/qunit-logging.js"></script>
+  <script type="text/javascript">
+    QUnit.config.reorder = false;
+  </script>
+
   <script>var Hogan = {};</script>
   <script src="../node_modules/hogan.js/lib/template.js"></script>
   <script src="../node_modules/hogan.js/lib/compiler.js"></script>
+
+  <script src="../node_modules/underscore/underscore.js"></script>
+  <script src="../node_modules/backbone/backbone.js"></script>
   <script src="../bogus.js"></script>
-  <script src="./index.js"></script>
+
+  <script src="index.js"></script>
 </head>
 <body>
   <h1 id="qunit-header">Bogus.js</h1>
