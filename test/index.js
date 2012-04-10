@@ -323,26 +323,11 @@ test("Basic Output", function() {
   is(t.render(), text, "template renders one text node");
 });
 
-test("Basic Output As String", function() {
-  return;
-  var text = "test";
-  var textFunc = Bogus.compile(text, true);
-  is(textFunc, "function(context, partials){this.buffer.push('test');};", "template renders correct text function.");
-});
-
 test("One Variable", function() {
   var text = "test {{foo}} test";
   var t = Bogus.compile(text);
   var s = t.render({foo:'bar'});
   is(s, "test bar test", "basic variable substitution works.");
-});
-
-test("One Variable As String", function() {
-  return;
-  var text = "test {{foo}} test";
-  var funcText = Bogus.compile(text, true);
-  is(funcText, "function(context, partials){this.buffer.push('test ');\nthis.buffer.push(this.find('foo', context));\nthis.buffer.push(' test');};",
-     "Function text is correct with variable substitution.");
 });
 
 test("Render With Whitespace", function() {
