@@ -1129,3 +1129,17 @@ test("Default Render Impl", function() {
   var ht = new Bogus.Template();
   is(ht.render() === '', true, 'default renderImpl returns an array.');
 });
+
+test("Section With Custom Uneven Delimiter Length", function() {
+  var text = '{{=<% %%>=}}Test<%#foo%%>bar<%/foo%%>';
+  var t = Bogus.compile(text);
+  var context = {
+    foo: function() {
+      return function(s) {
+        return "<b>" + s + "</b>";
+      }
+    }
+  }
+  var s = t.render(context);
+  is(s, 'Test<b>bar</b>', 'Section content is correct with uneven reset delimiter length');
+});
