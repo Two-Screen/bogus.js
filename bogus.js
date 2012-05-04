@@ -1,10 +1,7 @@
 (function(Hogan) {
 
   // Get a hold of Underscore.js.
-  var _ = null;
-  if (typeof window !== 'undefined') {
-      _ = window._;
-  }
+  var _ = this._;
   if (!_) {
       _ = require('underscore');
   }
@@ -16,10 +13,10 @@
   // Create a Bogus namespace that inherits from Hogan.
   ctor.prototype = Hogan;
   var Bogus = new ctor();
-  if (typeof window !== 'undefined') {
-    this.Bogus = Bogus;
-  } else {
+  if (typeof exports !== 'undefined') {
     module.exports = Bogus;
+  } else {
+    this.Bogus = Bogus;
   }
 
 
