@@ -646,6 +646,17 @@ test("Mustache is reprocessed for lambdas in interpolations", function() {
   };
   var s = t.render(context);
   is(s, "text with processing of 42 inside", "the return value of lambdas should be processed mustache.");
+
+  context = {
+    bar: "<b>42</b>",
+    foo: function() {
+      return function() {
+        return "processing of {{{bar}}}";
+      };
+    }
+  };
+  s = t.render(context);
+  is(s, "text with processing of <b>42</b> inside", "the return value of lambdas should be processed mustache, including triple-stache.");
 });
 
 test("Nested Section", function() {
@@ -856,6 +867,26 @@ test("Two overridden partials with different content", function() {
   var t = Bogus.compile(template);
   var s = t.render({}, {"partial": partial});
   is(s, 'test |override1 default| |override2 default|');
+});
+
+test("Override partial with newlines", function() {
+  var partial = "{{$ballmer}}peaking{{/ballmer}}";
+  var template = "{{<partial}}{{$ballmer}}\npeaked\n\n:(\n{{/ballmer}}{{/partial}}";
+  var t = Bogus.compile(template);
+  var s = t.render({}, {"partial": partial});
+  is(s, "peaked\n\n:(\n");
+
+  var compiledAsString = Bogus.compile(template, {asString: true});
+  eval('var fromString = new Bogus.Template(' + compiledAsString + ', template, Bogus);');
+  is(s, fromString.render({}, {"partial": partial}));
+});
+
+test("Inherit indentation when overriding a partial", function() {
+  var partial = "stop:\n  {{$nineties}}collaborate and listen{{/nineties}}";
+  var template = "{{<partial}}{{$nineties}}hammer time{{/nineties}}{{/partial}}";
+  var t = Bogus.compile(template);
+  var s = t.render({}, {"partial": partial});
+  is(s, "stop:\n  hammer time");
 });
 
 test("Override one substitution but not the other", function() {
@@ -1142,4 +1173,19 @@ test("Section With Custom Uneven Delimiter Length", function() {
   }
   var s = t.render(context);
   is(s, 'Test<b>bar</b>', 'Section content is correct with uneven reset delimiter length');
+});
+
+
+test("Lambda expression in inherited template subsections", function() {
+    var lambda = function() {
+        return function(argument) {
+            return 'altered ' + argument;
+        }
+    }
+    var partial = '{{$section1}}{{#lambda}}parent1{{/lambda}}{{/section1}} - {{$section2}}{{#lambda}}parent2{{/lambda}}{{/section2}}';
+    var text = '{{< partial}}{{$section1}}{{#lambda}}child1{{/lambda}}{{/section1}}{{/ partial}}'
+    var template = Bogus.compile(text);
+
+    var result = template.render({lambda: lambda}, {partial: Bogus.compile(partial)});
+    is(result, 'altered child1 - altered parent2', 'Lambda replacement failed with template inheritance');
 });
