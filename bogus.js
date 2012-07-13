@@ -106,20 +106,21 @@
         cx = null;
 
     if (key === '.') {
-      return ctx[ctx.length - 1];
+      val = ctx[ctx.length - 1];
     }
-
-    names = key.split('.');
-    val = this.f(names[0], ctx, partials, returnFound);
-    for (var i = 1; i < names.length; i++) {
-      result = getValue(val, names[i]);
-      if (result.found) {
-        cx = val;
-        val = result.val;
-      }
-      else {
-        val = '';
-        break;
+    else {
+      names = key.split('.');
+      val = this.f(names[0], ctx, partials, returnFound);
+      for (var i = 1; i < names.length; i++) {
+        result = getValue(val, names[i]);
+        if (result.found) {
+          cx = val;
+          val = result.val;
+        }
+        else {
+          val = '';
+          break;
+        }
       }
     }
 
