@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "backbone": ">=0.5",
-    "jsdom": "0.2.10",
+    "jsdom": "0.2.19",
     "step": "0.0.5"
   },
 
