@@ -1194,3 +1194,18 @@ test("Implicit iterator lambda evaluation", function () {
     var result = template.render({list: list});
     is(result, 'evaluated', '{{.}} lambda correctly evaluated');
 });
+
+test("Lambda expression in included partial templates", function() {
+    var lambda = function() {
+        return function(argument) {
+            return 'changed ' + argument;
+        }
+    }
+    var parent = '{{$section}}{{/section}}';
+    var partial = '{{$label}}test1{{/label}}';
+    var text = '{{< parent}}{{$section}}{{<partial}}{{$label}}{{#lambda}}test2{{/lambda}}{{/label}}{{/partial}}{{/section}}{{/parent}}';
+    var template = Bogus.compile(text);
+
+    var result = template.render({lambda: lambda}, {partial: Bogus.compile(partial), parent: Bogus.compile(parent)});
+    is(result, 'changed test2', 'Lambda expression in included partial templates');
+});
